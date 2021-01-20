@@ -71,9 +71,9 @@ output (confirmation message) :
 DROP DATABASE
 ```
 <br>
-<br>
-**See all a list of databases** -
-<br>
+
+- ### See all a list of databases
+
 ```
 \l
 ```
@@ -83,7 +83,7 @@ output :
 <a name='interacting_postgres'></a>
 ## Interacting with PostgreSQL dB in Python
 
-### Install in your local python environment "psycopg2" package - **<br>
+- ### Prerequisite - Install in your local python environment "psycopg2" package<br>
 Psycopg is a PostgreSQL database package that is interactive shell
 with PostgreSQL. It allows one to create, read, update, and delete PostgreSQL databases and tables. <br>[More about the installation here.](https://pypi.org/project/psycopg2/)
 One of the most frequent operations in interacting with a database is CRUD which stands for create, read, update, and delete a database, table, or content data. I will go over each of these simple steps.
