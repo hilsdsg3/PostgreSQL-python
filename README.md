@@ -8,7 +8,6 @@
 - [Interacting with PostgreSQL dB in Python.](#interacting_postgres)
 - [Credits](#credits)
 
-
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 <br>
@@ -20,14 +19,14 @@
 ## Helpful Win10 command (cmd) line commands
 <br>
 <br>
-**To start the windows10+ command file go to search menu and type "cmd"**<br>
+- ### To start the windows10+ command file go to search menu and type "cmd"**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you are allowed to, select "Run as administrator" 
-<br>
+<br><br>
 <p align="left"><img width=85% src="C:\Users\champ\Python_proj\postgreSQL_repo\data\cmd_line_start.png"></p>
 
 <br>
 <br>
-**To start postgreSQL server**<br>
+- ### To start postgreSQL server<br>
 -d : dBase name <br>
 -W : Password prompt - even if there is no password <br>
 -U : username <br>
@@ -44,8 +43,7 @@ output :
 
 <br>
 <br>
-**A COLON (;) commits any message to the database**
-<br>
+- ### A COLON (;) commits any message to the database
 ```
 DROP DATABASE TARGET_dB;
 CREATE DATABASE TARGET_db;
@@ -53,8 +51,7 @@ CREATE DATABASE TARGET_db;
 
 <br>
 <br>
-**Drop existing connections but yours** -
-<br>
+- ### Drop existing connections but yours
 For PostgreSQL 9.2 and above use the following
 ```
 SELECT pg_terminate_backend(pg_stat_activity.pid)
@@ -64,7 +61,7 @@ WHERE pg_stat_activity.datname = 'TARGET_dB' -- ← change this to your DB
 ```
 <br>
 <br>
-**Drop a database - **<br>
+- ### Drop a database<br>
 If you don't see a confirmation message,
 the command didn't commit (execute) to the dB    
 ```
@@ -92,9 +89,8 @@ Psycopg is a PostgreSQL database package that is interactive shell
 with PostgreSQL. It allows one to create, read, update, and delete PostgreSQL databases and tables. <br>[More about the installation here.](https://pypi.org/project/psycopg2/)
 One of the most frequent operations in interacting with a database is CRUD which stands for create, read, update, and delete a database, table, or content data. I will go over each of these simple steps.
 
-**Create a database - **<br>
-Once you have psycopg2 installed, import the package in python.
-Next connect to the postgres server in python. Please read the documentation of establishing a connection.
+- ### Create a database<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once you have psycopg2 installed, import the package in python. Next connect to the postgres server in python. Please read the documentation of establishing a connection.<br><br>
 - database = 'postgres'  # database server name
 - user = 'postgres'
 - password = 'password' # this value you may change later
@@ -155,10 +151,11 @@ financial database now closed successfully........
 </details>
 
 <br>
-**Create a table - **<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Once you have created the database and connected, CREATE a table. The table create statement looks complex, so I output a copy of the SQL statement below. This statement could be used as a simplification.  
-- TABLE_ = 'realized_profit_loss_tranactions'
-- DATABASE_ = 'financial' # sample database that is created 
+- ### Create a table<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Once you have created the database and connected, CREATE a table. The table create statement looks complex, so I output a copy of the SQL statement below. This statement could be used as a simplification.
+<br><br>
+TABLE_ = 'realized_profit_loss_tranactions'<br>
+DATABASE_ = 'financial' # sample database that is created 
 
 ```
 #establishing the connection
@@ -335,8 +332,9 @@ financial-# WHERE table_name = 'realized_profit_loss_tranactions';
 ```
 <br>
 
-**Update the table - **<br>
+- ### Update the table<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When the table schema is created, then update with values as the following. The python viewing is in pandas df because of the simplicity in display. This would not be feasible with reading 1 million rows for the database. When the table schema is as many columns as this sample. The cmd line output does not display well. It is better to view it in python with pandas in python not the following output.
+
 ```
 import pandas as pd
 
@@ -466,7 +464,7 @@ financial=# select * FROM realized_profit_loss_tranactions;
 (1 row)
 ```
 <br>
-**Delete/Drop a table - **<br>
+- ### Delete/Drop a table<br>
 
 ```
 #establishing the connection
