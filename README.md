@@ -38,7 +38,7 @@ postgres : user
 psql -d Learning -U postgres -W
 ```
 output :
-<p align="left"><img width=85% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/start_postgres.png"></p>
+<p align="left"><img width=100% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/start_postgres.png"></p>
 
 
 <br>
@@ -78,7 +78,7 @@ DROP DATABASE
 \l
 ```
 output :
-<p align="left"><img width=85% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/CREATE_dB.png/list_of_databases.png"></p>
+<p align="left"><img width=100% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/list_of_databases.png"></p>
 
 <a name='interacting_postgres'></a>
 ## Interacting with PostgreSQL dB in Python
@@ -146,7 +146,7 @@ CREATE database commit comment :
 "CREATE database financial"
 financial database now closed successfully........
 ```
-<p align="left"><img width=85% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/CREATE_dB.png"></p>
+<p align="left"><img width=100% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/CREATE_dB.png"></p>
 </details>
 
 - ### Create a table<br>
