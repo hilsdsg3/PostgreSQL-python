@@ -84,7 +84,7 @@ output :
 <a name='interacting_postgres'></a>
 ## Interacting with PostgreSQL dB in Python
 
-**Install in your local python environment "psycopg2" package - **<br>
+### Install in your local python environment "psycopg2" package - **<br>
 Psycopg is a PostgreSQL database package that is interactive shell
 with PostgreSQL. It allows one to create, read, update, and delete PostgreSQL databases and tables. <br>[More about the installation here.](https://pypi.org/project/psycopg2/)
 One of the most frequent operations in interacting with a database is CRUD which stands for create, read, update, and delete a database, table, or content data. I will go over each of these simple steps.
@@ -150,10 +150,9 @@ financial database now closed successfully........
 <p align="left"><img width=85% src="C:\Users\champ\Python_proj\postgreSQL_repo\data\CREATE_dB.png"></p>
 </details>
 
-<br>
 - ### Create a table<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Once you have created the database and connected, CREATE a table. The table create statement looks complex, so I output a copy of the SQL statement below. This statement could be used as a simplification.
-<br><br>
+<br>
 TABLE_ = 'realized_profit_loss_tranactions'<br>
 DATABASE_ = 'financial' # sample database that is created 
 
@@ -464,6 +463,7 @@ financial=# select * FROM realized_profit_loss_tranactions;
 (1 row)
 ```
 <br>
+
 - ### Delete/Drop a table<br>
 
 ```
