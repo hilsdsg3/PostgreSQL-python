@@ -18,14 +18,14 @@
 <a name='helpful_cmd_line_commands'></a>
 ## Helpful Win10 command (cmd) line commands
 <br>
-<br>
+
 - ### To start the windows10+ command file go to search menu and type "cmd"**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you are allowed to, select "Run as administrator" 
 <br><br>
 <p align="left"><img width=85% src="C:\Users\champ\Python_proj\postgreSQL_repo\data\cmd_line_start.png"></p>
 
 <br>
-<br>
+
 - ### To start postgreSQL server<br>
 -d : dBase name <br>
 -W : Password prompt - even if there is no password <br>
