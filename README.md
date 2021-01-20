@@ -1,4 +1,4 @@
-<h1 align="center"> PostgreSQL with cmd line and python  </h1> 
+<h1 align="center"> PostgreSQL with cmd line and python psycopg2 </h1> 
 
 <br>
 
@@ -16,13 +16,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To show how to easily interact with Win10 postgreSQL cmd line and Python using PostgreSQL database adapter package "psycopg2".
 
 <a name='helpful_cmd_line_commands'></a>
-## Helpful Win10 command (cmd) line commands
+## Common Win10 PostgreSQL cmd line commands
 <br>
 
 - ### To start the windows10+ command file go to search menu and type "cmd"**<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you are allowed to, select "Run as administrator" 
 <br><br>
-<p align="left"><img width=85% src="C:\Users\champ\Python_proj\postgreSQL_repo\data\cmd_line_start.png"></p>
+<p align="left"><img width=85% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/cmd_line_start.png"></p>
 
 <br>
 
@@ -38,7 +38,7 @@ postgres : user
 psql -d Learning -U postgres -W
 ```
 output :
-<p align="left"><img width=85% src="C:\Users\champ\Python_proj\postgreSQL_repo\data\start_postgres.png"></p>
+<p align="left"><img width=85% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/start_postgres.png"></p>
 
 
 <br>
@@ -78,7 +78,7 @@ DROP DATABASE
 \l
 ```
 output :
-<p align="left"><img width=85% src="C:\Users\champ\Python_proj\postgreSQL_repo\data\list_of_databases.png"></p>
+<p align="left"><img width=85% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/CREATE_dB.png/list_of_databases.png"></p>
 
 <a name='interacting_postgres'></a>
 ## Interacting with PostgreSQL dB in Python
@@ -146,7 +146,7 @@ CREATE database commit comment :
 "CREATE database financial"
 financial database now closed successfully........
 ```
-<p align="left"><img width=85% src="C:\Users\champ\Python_proj\postgreSQL_repo\data\CREATE_dB.png"></p>
+<p align="left"><img width=85% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/CREATE_dB.png"></p>
 </details>
 
 - ### Create a table<br>
