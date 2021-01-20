@@ -42,15 +42,14 @@ output :
 
 
 <br>
-<br>
+
 - ### A COLON (;) commits any message to the database
 ```
 DROP DATABASE TARGET_dB;
 CREATE DATABASE TARGET_db;
 ```
+<br>
 
-<br>
-<br>
 - ### Drop existing connections but yours
 For PostgreSQL 9.2 and above use the following
 ```
@@ -60,7 +59,7 @@ WHERE pg_stat_activity.datname = 'TARGET_dB' -- ← change this to your DB
   AND pid <> pg_backend_pid();
 ```
 <br>
-<br>
+
 - ### Drop a database<br>
 If you don't see a confirmation message,
 the command didn't commit (execute) to the dB    
