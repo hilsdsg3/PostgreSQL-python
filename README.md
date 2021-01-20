@@ -27,9 +27,9 @@
 <br>
 
 - ### To start postgreSQL server<br>
--d : dBase name <br>
--W : Password prompt - even if there is no password <br>
--U : username <br>
+d : dBase name <br>
+W : Password prompt - even if there is no password <br>
+U : username <br>
 Learning : an example dB
 postgres : user
 [There are more -options at this link](https://www.postgresql.org/docs/11/app-psql.html)
@@ -90,11 +90,11 @@ One of the most frequent operations in interacting with a database is CRUD which
 
 - ### Create a database<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once you have psycopg2 installed, import the package in python. Next connect to the postgres server in python. Please read the documentation of establishing a connection.<br><br>
-- database = 'postgres'  # database server name
-- user = 'postgres'
-- password = 'password' # this value you may change later
-- host = '127.0.0.1' # local host computer's IP address
-- port = '5432' # PostgreSQL's default port
+database = 'postgres'  # database server name
+user = 'postgres'
+password = 'password' # this value you may change later
+host = '127.0.0.1' # local host computer's IP address
+port = '5432' # PostgreSQL's default port
 
 ```
 # import the package
