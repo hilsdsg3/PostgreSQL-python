@@ -6,6 +6,7 @@
 
 - [Helpful cmd line commands.](#helpful_cmd_line_commands)
 - [Interacting with PostgreSQL dB in Python.](#interacting_postgres)
+- [Improvements.](#improvements)
 - [Credits](#credits)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -13,7 +14,7 @@
 <br>
 
 ## Goal
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To show how to easily interact with Win10 postgreSQL cmd line and Python using PostgreSQL database adapter package "psycopg2".
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To show how to easily interact with Win10 postgreSQL cmd line and Python using PostgreSQL database adapter package "psycopg2". [See python notebook.](https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/postgres_database.ipynb)
 
 <a name='helpful_cmd_line_commands'></a>
 ## Common Win10 PostgreSQL cmd line commands
@@ -30,8 +31,8 @@
 d : dBase name <br>
 W : Password prompt - even if there is no password <br>
 U : username <br>
-Learning : an example dB
-postgres : user
+Learning : an example dB<br>
+postgres : user<br>
 [There are more -options at this link](https://www.postgresql.org/docs/11/app-psql.html)
 <br>
 ```
@@ -84,9 +85,9 @@ output :
 ## Interacting with PostgreSQL dB in Python
 
 - ### Prerequisite - Install in your local python environment "psycopg2" package<br>
-Psycopg is a PostgreSQL database package that is interactive shell
-with PostgreSQL. It allows one to create, read, update, and delete PostgreSQL databases and tables. <br>[More about the installation here.](https://pypi.org/project/psycopg2/)
-One of the most frequent operations in interacting with a database is CRUD which stands for create, read, update, and delete a database, table, or content data. I will go over each of these simple steps.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Psycopg is a PostgreSQL database package that is interactive shell
+with PostgreSQL. It allows one to create, read, update, and delete PostgreSQL databases and tables. <br>[More about the installation here.](https://pypi.org/project/psycopg2/)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One of the most frequent operations in interacting with a database is CRUD which stands for create, read, update, and delete a database, table, or content data. I will go over each of these simple steps.
 
 - ### Create a database<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once you have psycopg2 installed, import the package in python. Next connect to the postgres server in python. Please read the documentation of establishing a connection.<br><br>
@@ -495,13 +496,16 @@ realized_profit_loss_tranactions dropped successfully........
 
 financial database now closed successfully........
 ```
-
-
-
-</details>
-</details>
-
 <br>
+<a name='improvements'></a>
+## Improvements
+- create funtion wrappers in python
+- create try and fail statements
+
+
+</details>
+</details>
+
 <br>
 
 ## Credits
