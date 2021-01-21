@@ -497,9 +497,10 @@ realized_profit_loss_tranactions dropped successfully........
 financial database now closed successfully........
 ```
 <br>
+
 <a name='improvements'></a>
-## Improvements
-- create funtion wrappers in python
+## Improvements<br>
+- create function wrappers in python<br>
 - create try and fail statements
 
 
@@ -507,6 +508,7 @@ financial database now closed successfully........
 </details>
 
 <br>
+
 <a name='credits'></a>
 ## Credits
 
