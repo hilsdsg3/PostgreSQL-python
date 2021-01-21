@@ -4,7 +4,7 @@
 
 ## Table of Contents
 
-- [Helpful cmd line commands.](#helpful_cmd_line_commands)
+- [Common Win10 PostgreSQL cmd line commands.](#helpful_cmd_line_commands)
 - [Interacting with PostgreSQL dB in Python.](#interacting_postgres)
 - [Improvements.](#improvements)
 - [Credits](#credits)
@@ -507,7 +507,7 @@ financial database now closed successfully........
 </details>
 
 <br>
-
+<a name='credits'></a>
 ## Credits
 
 - PostgreSQL: Documentation. (2000). Retrieved from https://www.postgresql.org/docs/
