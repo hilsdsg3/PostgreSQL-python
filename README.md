@@ -13,8 +13,12 @@
 
 <br>
 
-## Goal
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To show how to easily interact with Win10 postgreSQL cmd line and Python using PostgreSQL database adapter package "psycopg2". [See python notebook.](https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/postgres_database.ipynb)
+## Goals
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. To show how to easily interact with Win10 postgreSQL cmd line and Python using PostgreSQL database adapter package "psycopg2". [See python notebook.](https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/postgres_database.ipynb)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. My python notebook builds an entity relationship (ER) diagram simplified in the following tutorial.   
+
+<p align="left"><img width=85% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/ER_diagram.png"></p>
 
 <a name='helpful_cmd_line_commands'></a>
 ## Common Win10 PostgreSQL cmd line commands
@@ -27,7 +31,7 @@
 
 <br>
 
-- ### To start postgreSQL server<br>
+- ### To open the connection to a postgreSQL server<br>
 d : dBase name <br>
 W : Password prompt - even if there is no password <br>
 U : username <br>
@@ -84,12 +88,12 @@ output :
 <a name='interacting_postgres'></a>
 ## Interacting with PostgreSQL dB in Python
 
-- ### Prerequisite - Install in your local python environment "psycopg2" package<br>
+- ### Prerequisite - Install in your local python environment the "psycopg2" package<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Psycopg is a PostgreSQL database package that is interactive shell
 with PostgreSQL. It allows one to create, read, update, and delete PostgreSQL databases and tables. <br>[More about the installation here.](https://pypi.org/project/psycopg2/)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One of the most frequent operations in interacting with a database is CRUD which stands for create, read, update, and delete a database, table, or content data. I will go over each of these simple steps.
 
-- ### Create a database<br>
+- ### Preparation of the database driver<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once you have psycopg2 installed, import the package in python. Next connect to the postgres server in python. Please read the documentation of establishing a connection.<br><br>
 database = 'postgres'  # database server name
 user = 'postgres'
@@ -99,24 +103,27 @@ port = '5432' # PostgreSQL's default port
 
 ```
 # import the package
-import psycopg2
+import psycopg2 # postgreSQL's database driver
+import numpy as np
+import pandas as pd
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 # set the variables
 DATABASE_INITIAL_ = 'postgres'
+DATABASE_ = 'financial'
 USER_ = 'postgres'
 PASSWORD_ = 'password'
 HOST_ = '127.0.0.1'
 PORT_ = '5432'
-DATABASE_ = 'financial' # sample database that is created 
 
-#establishing the connection
-conn = psycopg2.connect(
-   database = DATABASE_INITIAL_,
-   user = USER_,
-   password = PASSWORD_,
-   host = HOST_,
-   port = PORT_
-)
+# python functions (title) - Please refer to the python notebook
+def establish_connection(DATABASE_, USER_, PASSWORD_, HOST_, PORT_):
+def detect_table_exists(cursor, TABLE_):
+def create_database(DATABASE_INITIAL_, DATABASE_, USER_, PASSWORD_, HOST_, PORT_):
+def create_table(DATABASE_, USER_, PASSWORD_, HOST_, PORT_, sql_script, TABLE_):
+def update_table(DATABASE_, USER_, PASSWORD_, HOST_, PORT_, sql_script, TABLE_):
+def drop_table(DATABASE_, USER_, PASSWORD_, HOST_, PORT_, sql_script, TABLE_):
+
 
 # Setting the connection to TRUE allows cleaner
 # commit statements able to be read by postgreSQL 
@@ -128,379 +135,138 @@ conn.autocommit = True
 # Creating a cursor object in order to execute statements
 cursor = conn.cursor()
 
-# Preparing query to create a database
-sql = '''CREATE database '''+DATABASE_;
-
-# Creating a database
-cursor.execute(sql)
-print(f'\n{DATABASE_} database created successfully........')
-print(f'\nCREATE database commit comment :\n"{sql}"\n')
-
-# Closing the connection - always close the database when not interacting 
-conn.close()
-print(f'\n{DATABASE_} database now closed successfully........')
 ```
-output in python and cmd line :
+- ### Create a database <br>
+```
+# Create a database by using the following function
+create_database(DATABASE_INITIAL_, DATABASE_, USER_, PASSWORD_, HOST_, PORT_)
+```
+output of python
 ```
 financial database created successfully........
 CREATE database commit comment :
 "CREATE database financial"
 financial database now closed successfully........
 ```
+output if the database exists :
+```
+The dB of the name financial exists already
+```
 <p align="left"><img width=100% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/CREATE_dB.png"></p>
 </details>
 
-- ### Create a table<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Once you have created the database and connected, CREATE a table. The table create statement looks complex, so I output a copy of the SQL statement below. This statement could be used as a simplification.
+- ### Create a table <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Once you have created the database and connected, CREATE a table. The table create statement looks complex, so I output a copy of the SQL statement below. The following statement is simplified.
 <br>
-TABLE_ = 'realized_profit_loss_tranactions'<br>
-DATABASE_ = 'financial' # sample database that is created 
+TABLE_ = 'exchange'<br>
+DATABASE_ = 'financial'<br>
 
 ```
-#establishing the connection
-conn = psycopg2.connect(
-   database=DATABASE_,
-   user = USER_,
-   password = PASSWORD_,
-   host = HOST_,
-   port = PORT_
-)
+# create exchange table
+TABLE_ = 'exchange'
+sql = '''CREATE TABLE IF NOT EXISTS ''' + TABLE_ + ''' (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(10) NOT NULL,
+  currency CHAR(3) NULL DEFAULT NULL,
+  created_date TIMESTAMPTZ NULL DEFAULT TRANSACTION_TIMESTAMP(),
+  last_updated  TIMESTAMPTZ NULL DEFAULT TRANSACTION_TIMESTAMP())'''
 
-conn.autocommit = True
-
-# #Creating a cursor object using the cursor() method
-cursor = conn.cursor()
-
-# table sample column organization
-columns = {1:'Closed_Date',
-           2:'Symbol',
-           3:'Name',
-           4:'Quantity',
-           5:'Proceeds',
-           6:'CostBasis',
-           7:'Personal',
-           8:'Total_Gain_Loss_pc',
-           9:'Long_Term_Gain_Loss_amt',
-           10:'Long_Term_Gain_Loss_pc',
-           11:'Short_Term_Gain_Loss_amt',
-           12:'Short_Term_Gain_Loss_pc',
-           13:'Wash_Sale',
-           14:'account'}
-
-# table datatype setup
-datatype = {'FT' : 'FLOAT',
-            'DT' : 'DATE',
-            'INT' : 'INTEGER',
-            'CHAR_S' : 'CHAR(20)',
-            'CHAR_L' : 'CHAR(40)'}
-
-# table space_nulls setup
-spaces_nulls = {'NLL' : 'NULL',
-                'NNULL' : 'NOT NULL',
-                'sp' : ''' ''',
-                'cma' : ''',''',
-                'nl' : '''\n'''}
-
-
-#Creating table as per requirement
-sql ='''CREATE TABLE '''+TABLE_+'''\n('''\
-    +columns[1]+spaces_nulls['sp']+datatype['DT']+spaces_nulls['sp']+spaces_nulls['NNULL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[2]+spaces_nulls['sp']+datatype['CHAR_S']+spaces_nulls['sp']+spaces_nulls['NNULL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[3]+spaces_nulls['sp']+datatype['CHAR_L']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[4]+spaces_nulls['sp']+datatype['INT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[5]+spaces_nulls['sp']+datatype['FT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[6]+spaces_nulls['sp']+datatype['FT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[7]+spaces_nulls['sp']+datatype['FT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[8]+spaces_nulls['sp']+datatype['FT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[9]+spaces_nulls['sp']+datatype['FT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[10]+spaces_nulls['sp']+datatype['FT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[11]+spaces_nulls['sp']+datatype['FT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[12]+spaces_nulls['sp']+datatype['FT']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[13]+spaces_nulls['sp']+datatype['CHAR_S']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[14]+spaces_nulls['sp']+datatype['CHAR_S']+spaces_nulls['sp']+spaces_nulls['NLL']+spaces_nulls['nl']\
-+''')'''
-
-cursor.execute(sql)
-
-print(f'\nTable created successfully........')
-print(f'\nTable CREATE sql commit comment :\n"{sql}"\n')
-
-
-arr = ['column_name','data_type', 'is_nullable']
-sql = """                              
-SELECT """+arr[0]+""", """+arr[1]+""", """+arr[2]+"""
-FROM information_schema.columns
-WHERE table_name = '"""+TABLE_+"""'""";
-
-cursor.execute(sql)
-print(f'\n READ database commit comment :\n"{sql}"\n')
-
-data = cursor.fetchall()
-
-panda_df = pd.DataFrame(data = data,  
-                        columns = arr)
-
-print(f'\nPandas schema READ :\n"{panda_df}"\n')
-
-# #Closing the connection
-conn.close()
-print(f'\n{DATABASE_} database now closed successfully........')
+create_database(DATABASE_INITIAL_, DATABASE_, USER_, PASSWORD_, HOST_, PORT_)
 ```
+
 output in python :
 ```
+TABLE : "exchange" DOES NOT EXIST
+
+CREATING TABLE : exchange ....
+
 Table created successfully........
 
-Table CREATE sql commit comment :
-"CREATE TABLE realized_profit_loss_tranactions
-(Closed_Date DATE NOT NULL,
-Symbol CHAR(20) NOT NULL,
-Name CHAR(40) NULL,
-Quantity INTEGER NULL,
-Proceeds FLOAT NULL,
-CostBasis FLOAT NULL,
-Personal FLOAT NULL,
-Total_Gain_Loss_pc FLOAT NULL,
-Long_Term_Gain_Loss_amt FLOAT NULL,
-Long_Term_Gain_Loss_pc FLOAT NULL,
-Short_Term_Gain_Loss_amt FLOAT NULL,
-Short_Term_Gain_Loss_pc FLOAT NULL,
-Wash_Sale CHAR(20) NULL,
-account CHAR(20) NULL
-)"
+CREATE sql commit comment :
+CREATE TABLE IF NOT EXISTS exchange (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(10) NOT NULL,
+  currency CHAR(3) NULL DEFAULT NULL,
+  created_date TIMESTAMPTZ NULL DEFAULT TRANSACTION_TIMESTAMP(),
+  last_updated  TIMESTAMPTZ NULL DEFAULT TRANSACTION_TIMESTAMP())
+READ sql commit comment :                              
+    SELECT column_name, data_type, is_nullable
+    FROM information_schema.columns
+    WHERE table_name = 'exchange';
 
+Pandas schema READ :
+"    column_name                 data_type is_nullable
+0            id                   integer          NO
+1          name         character varying          NO
+2      currency                 character         YES
+3  created_date  timestamp with time zone         YES
+4  last_updated  timestamp with time zone         YES"
 
- READ database commit comment :
-"                              
-SELECT column_name, data_type, is_nullable
-FROM information_schema.columns
-WHERE table_name = 'realized_profit_loss_tranactions'"
-
-
-Table schema READ sql commit comment :
-"                 column_name         data_type is_nullable
-0                closed_date              date          NO
-1                     symbol         character          NO
-2                       name         character         YES
-3                   quantity           integer         YES
-4                   proceeds  double precision         YES
-5                  costbasis  double precision         YES
-6                   personal  double precision         YES
-7         total_gain_loss_pc  double precision         YES
-8    long_term_gain_loss_amt  double precision         YES
-9     long_term_gain_loss_pc  double precision         YES
-10  short_term_gain_loss_amt  double precision         YES
-11   short_term_gain_loss_pc  double precision         YES
-12                 wash_sale         character         YES
-13                   account         character         YES"
-
-
-financial database now closed successfully........
+financial database now closed successfully.
 ```
-cmd line output :
-```
-financial=# psql -d financial -U postgres -W
-financial-# \d
-                      List of relations
- Schema |               Name               | Type  |  Owner
---------+----------------------------------+-------+----------
- public | realized_profit_loss_tranactions | table | postgres
-(1 row)
 
-financial=# SELECT column_name, data_type, is_nullable
-financial-# FROM information_schema.columns
-financial-# WHERE table_name = 'realized_profit_loss_tranactions';
-
-       column_name        |    data_type     | is_nullable
---------------------------+------------------+-------------
- closed_date              | date             | NO
- symbol                   | character        | NO
- name                     | character        | YES
- quantity                 | integer          | YES
- proceeds                 | double precision | YES
- costbasis                | double precision | YES
- personal                 | double precision | YES
- total_gain_loss_pc       | double precision | YES
- long_term_gain_loss_amt  | double precision | YES
- long_term_gain_loss_pc   | double precision | YES
- short_term_gain_loss_amt | double precision | YES
- short_term_gain_loss_pc  | double precision | YES
- wash_sale                | character        | YES
- account                  | character        | YES
-(14 rows)
-
-```
 <br>
 
 - ### Update the table<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When the table schema is created, then update with values as the following. The python viewing is in pandas df because of the simplicity in display. This would not be feasible with reading 1 million rows for the database. When the table schema is as many columns as this sample. The cmd line output does not display well. It is better to view it in python with pandas in python not the following output.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When the table schema is created, then update with values as the following. The python viewing is in pandas df because of the simplicity in display. This would not be feasible with reading 1 million rows for the database so a UPDATE LIMIT statement would be needed.<br>
+```
+# update exchange table
+TABLE_ = 'exchange'
+sql = '''INSERT INTO ''' + TABLE_ + ''' (
+  name, currency, created_date, last_updated)
+  VALUES ('NASDAQ', 'USD', '2000-01-01', '2001-02-01');'''
+create_table(DATABASE_,
+                 USER_,
+                 PASSWORD_,
+                 HOST_,
+                 PORT_,
+                 sql,
+                 TABLE_)
+```
+output in python :
 
 ```
-import pandas as pd
+TABLE : "exchange" EXISTS
 
-#establishing the connection
-conn = psycopg2.connect(
-   database=DATABASE_,
-   user = USER_,
-   password = PASSWORD_,
-   host = HOST_,
-   port = PORT_
-)
-
-conn.autocommit = True
-
-# #Creating a cursor object using the cursor() method
-cursor = conn.cursor()
-
-# Preparing SQL queries to INSERT a record into the database.
-sql = '''INSERT INTO '''+TABLE_+'''\n('''\
-    +columns[1]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[2]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[3]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[4]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[5]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[6]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[7]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[8]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[9]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[10]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[11]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[12]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[13]+spaces_nulls['cma']+spaces_nulls['nl']\
-    +columns[14]+spaces_nulls['nl']\
-   +''') VALUES (
-   '2017-06-15',
-   'TLT',
-   'ISHARES',
-   132,
-   15847.18,
-   16023.15,
-   -43.99,
-   -0.27,
-   0,
-   0,
-   -43.99,
-   -0.27,
-   'Yes',
-   'Personal'
-   )'''
-cursor.execute(sql)
-
-print(f'\nData inserted successfully........')
-print(f'Table INSERT sql commit comment :\n"{sql}"/n')
-
-sql = "SELECT * FROM "+TABLE_
-cursor.execute(sql)
-
-# Formatting the dataframe
-rows = cursor.fetchall()
-arr = np.array(rows).flatten()
-df = pd.DataFrame(np.zeros((1,len(columns))), columns=columns.values())
-for i,nr in enumerate(columns):
-    df.loc[0,columns[nr]] = arr[i]
-df['Closed_Date'] = pd.to_datetime(df['Closed_Date'])
-
-print(f'\nData fetched successfully........')
-print(f'Table READ sql commit comment :\n"{sql}"\n')
-print(f'\nPandas schema READ :')
-df = display(df)
-
-# Closing the connection
-conn.close()
-print(f'\n{DATABASE_} database now closed successfully........')
-```
-python output :
-```
 Data inserted successfully........
 Table INSERT sql commit comment :
-"INSERT INTO realized_profit_loss_tranactions
-(Closed_Date,
-Symbol,
-Name,
-Quantity,
-Proceeds,
-CostBasis,
-Personal,
-Total_Gain_Loss_pc,
-Long_Term_Gain_Loss_amt,
-Long_Term_Gain_Loss_pc,
-Short_Term_Gain_Loss_amt,
-Short_Term_Gain_Loss_pc,
-Wash_Sale,
-account
-) VALUES (
-   '2017-06-15',
-   'TLT',
-   'ISHARES',
-   132,
-   15847.18,
-   16023.15,
-   -43.99,
-   -0.27,
-   0,
-   0,
-   -43.99,
-   -0.27,
-   'Yes',
-   'Personal'
-   )"/n
+"INSERT INTO exchange (
+  name, currency, created_date, last_updated)
+  VALUES ('NASDAQ', 'USD', '2000-01-01', '2001-02-01');"
+
 
 Data fetched successfully........
-Table READ sql commit comment :
-"SELECT * FROM realized_profit_loss_tranactions"
+Table READ LIMIT 5 sql commit comment :
+"SELECT * FROM exchange"
 
-Pandas schema READ :
-Closed_Date	Symbol	Name	Quantity	Proceeds	CostBasis	Personal	Total_Gain_Loss_pc	Long_Term_Gain_Loss_amt	Long_Term_Gain_Loss_pc	Short_Term_Gain_Loss_amt	Short_Term_Gain_Loss_pc	Wash_Sale	account
-0	2017-06-15	TLT	ISHARES	132.0	15847.18	16023.15	-43.99	-0.27	0.0	0.0	-43.99	-0.27	Yes	Personal
+Pandas display :
+id	name	currency	created_date	last_updated
+0	1	NASDAQ	USD	2000-01-01 00:00:00-08:00	2001-02-01 00:00:00-08:00
+```
 
-financial database now closed successfully........
-```
-output in cmd line :
-```
-financial=# select * FROM realized_profit_loss_tranactions;
- closed_date | symbol |    name    | quantity | proceeds | costbasis | personal | total_gain_loss_pc | long_term_gain_loss_amt | long_term_gain_loss_pc | short_term_gain_loss_amt | short_term_gain_loss_pc | wash_sale |  account
--------------+--------+------------+----------+----------+-----------+----------+--------------------+-------------------------+------------------------+--------------------------+-------------------------+-----------+------------
- 2017-06-15  | TLT    | ISHARES    |      132 | 15847.18 |  16023.15 |   -43.99 |              -0.27 |                       0 |                      0 |                   -43.99 |                   -0.27 | Yes       | Personal
-(1 row)
-```
-<br>
 
 - ### Delete/Drop a table<br>
 
 ```
-#establishing the connection
-conn = psycopg2.connect(
-    database = DATABASE_,
-    user = USER_,
-    password = PASSWORD_,
-    host = HOST_,
-    port = PORT_
-)
-conn.autocommit = True
-
-#Creating a cursor object using the cursor() method
-cursor = conn.cursor()
-
-#Preparing query to create a database
-sql = '''DROP TABLE '''+TABLE_;
-cursor.execute(sql)
-print(f"\n{TABLE_} dropped successfully........")
-
-#Closing the connection
-conn.close()
-print(f'\n{DATABASE_} database now closed successfully........')
+# drop table exchange
+drop_table(DATABASE_, USER_, PASSWORD_, HOST_, PORT_, sql_script, TABLE_):
 
 ```
 output in python :
 ```
-realized_profit_loss_tranactions dropped successfully........
+financial database now opened successfully........
 
-financial database now closed successfully........
+TABLE : "exchange" EXISTS
+exchange DROP sql commit comment :
+"DROP TABLE IF EXISTS exchange;"
+exchange dropped successfully.
+financial database now closed successfully.
+
 ```
 <br>
 
 <a name='improvements'></a>
 ## Improvements<br>
-- create function wrappers in python<br>
 - create try and fail statements
 
 
