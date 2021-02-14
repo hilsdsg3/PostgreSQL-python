@@ -169,7 +169,7 @@ The dB of the name financial exists already
 <br>
 
 - ### Create a table <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Once you have created the database and connected, CREATE a table. The table create statement looks complex, so I output a copy of the SQL statement below. The following statement is simplified.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Once you have created the database and connected, CREATE a table and a sample is shown in the following.
 <br>
 TABLE_ = 'exchange'<br>
 DATABASE_ = 'financial'<br>
