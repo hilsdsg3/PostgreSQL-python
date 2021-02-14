@@ -86,6 +86,10 @@ DROP DATABASE
 output :
 <p align="left"><img width=100% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/list_of_databases.png"></p>
 
+<br>
+<br>
+<br>
+
 <a name='interacting_postgres'></a>
 ## Interacting with PostgreSQL dB in Python
 
@@ -137,6 +141,10 @@ conn.autocommit = True
 cursor = conn.cursor()
 
 ```
+<br>
+<br>
+<br>
+
 - ### Create a database <br>
 ```
 # Create a database by using the following function
@@ -155,6 +163,10 @@ The dB of the name financial exists already
 ```
 <p align="left"><img width=100% src="https://github.com/hilsdsg3/PostgreSQL-python/blob/master/data/CREATE_dB.png"></p>
 </details>
+
+<br>
+<br>
+<br>
 
 - ### Create a table <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Once you have created the database and connected, CREATE a table. The table create statement looks complex, so I output a copy of the SQL statement below. The following statement is simplified.
@@ -207,6 +219,8 @@ financial database now closed successfully.
 ```
 
 <br>
+<br>
+<br>
 
 - ### Update the table<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When the table schema is created, then update with values as the following. The python viewing is in pandas df because of the simplicity in display. This would not be feasible with reading 1 million rows for the database so a UPDATE LIMIT statement would be needed.<br>
@@ -245,6 +259,9 @@ id	name	currency	created_date	last_updated
 0	1	NASDAQ	USD	2000-01-01 00:00:00-08:00	2001-02-01 00:00:00-08:00
 ```
 
+<br>
+<br>
+<br>
 
 - ### Delete/Drop a table<br>
 
